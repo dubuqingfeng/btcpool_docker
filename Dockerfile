@@ -11,3 +11,6 @@ RUN bash ./install_dependency.sh
 
 COPY install/install_btcpool.sh install_btcpool.sh
 RUN bash ./install_btcpool.sh
+
+COPY install/init_folders.sh init_folders.sh
+RUN bash ./init_folders.sh
