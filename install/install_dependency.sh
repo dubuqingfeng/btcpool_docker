@@ -13,8 +13,8 @@ CPUS=`lscpu | grep '^CPU(s):' | awk '{print $2}'`
 # librdkafka-v0.11.4
 apt-get install -y zlib1g zlib1g-dev
 mkdir -p /root/source && cd /root/source
-wget https://github.com/edenhill/librdkafka/archive/0.11.4.tar.gz
-tar zxvf 0.11.4.tar.gz
+wget https://github.com/edenhill/librdkafka/archive/v0.11.4.tar.gz
+tar zxvf v0.11.4.tar.gz
 cd librdkafka-0.11.4
 ./configure && make -j $CPUS && make install
 
