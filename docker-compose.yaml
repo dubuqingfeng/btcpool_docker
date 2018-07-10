@@ -1,4 +1,6 @@
 version: '3.3'
+# networks:
+#   btcpool:
 
 services:
   zookeeper:
@@ -10,12 +12,25 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: 172.20.0.1
+      KAFKA_ADVERTISED_HOST_NAME: 172.19.0.1
       KAFKA_CREATE_TOPICS: "test:1:1,RawGbt:1:1,StratumJob:1:1,SolvedShare:1:1,ShareLog:1:1,CommonEvents:1:1,NMCAuxBlock:1:1,NMCSolvedShare:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   btcpool:
     image: daocloud.io/dubuqingfeng/btcpool
     volumes:
-      - ./sserver.cfg:/work/btcpool/build/run_sserver/sserver.cfg
+      - ./config/sserver.cfg:/work/btcpool/build/run_sserver/sserver.cfg
+      - ./config/jobmaker.cfg:/work/btcpool/build/run_jobmaker/jobmaker.cfg
+      - ./config/blkmaker.cfg:/work/btcpool/build/run_blkmaker/blkmaker.cfg
+      - ./config/gbtmaker.cfg:/work/btcpool/build/run_gbtmaker/gbtmaker.cfg
+      - ./config/statshttpd.cfg:/work/btcpool/build/run_statshttpd/statshttpd.cfg
+      - ./config/sharelogger.cfg:/work/btcpool/build/run_sharelogger/sharelogger.cfg
     container_name: btcpool
-    command: /work/btcpool/build/run_sserver/sserver -c /work/btcpool/build/run_sserver/sserver.cfg -l /work/btcpool/build/run_sserver/log_sserver
+    depends_on:
+      - kafka
+    ports:
+      - "3333:3333"
+    # command: /work/btcpool/build/run_sserver/sserver -c /work/btcpool/build/run_sserver/sserver.cfg -l /work/btcpool/build/run_sserver/log_sserver
+    # command: /work/btcpool/build/run_jobmaker/jobmaker -c /work/btcpool/build/run_jobmaker/jobmaker.cfg -l /work/btcpool/build/run_jobmaker/log_jobmaker
+    command: tail -f /dev/null
