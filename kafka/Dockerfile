@@ -1,1 +1,1 @@
-FROM wurstmeister/zookeeper
+FROM wurstmeister/kafka
