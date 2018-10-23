@@ -20,12 +20,17 @@ services:
   btcpool-sserver:
     image: daocloud.io/dubuqingfeng/btcpool
     volumes:
-      - ./config/sserver.cfg:/work/btcpool/build/run_sserver/sserver.cfg
-      - ./config/jobmaker.cfg:/work/btcpool/build/run_jobmaker/jobmaker.cfg
-      - ./config/blkmaker.cfg:/work/btcpool/build/run_blkmaker/blkmaker.cfg
-      - ./config/gbtmaker.cfg:/work/btcpool/build/run_gbtmaker/gbtmaker.cfg
-      - ./config/statshttpd.cfg:/work/btcpool/build/run_statshttpd/statshttpd.cfg
-      - ./config/sharelogger.cfg:/work/btcpool/build/run_sharelogger/sharelogger.cfg
+      - ./configs/sserver.cfg:/work/btcpool/build/run_sserver/sserver.cfg
+      - ./configs/jobmaker.cfg:/work/btcpool/build/run_jobmaker/jobmaker.cfg
+      - ./configs/nmcauxmaker.cfg:/work/btcpool/build/run_nmcauxmaker/nmcauxmaker.cfg
+      - ./configs/blkmaker.cfg:/work/btcpool/build/run_blkmaker/blkmaker.cfg
+      - ./configs/gbtmaker.cfg:/work/btcpool/build/run_gbtmaker/gbtmaker.cfg
+      - ./configs/gwmaker.cfg:/work/btcpool/build/run_gwmaker/gwmaker.cfg
+      - ./configs/statshttpd.cfg:/work/btcpool/build/run_statshttpd/statshttpd.cfg
+      - ./configs/sharelogger.cfg:/work/btcpool/build/run_sharelogger/sharelogger.cfg
+      - ./configs/slparser.cfg:/work/btcpool/build/run_slparser/slparser.cfg
+      - ./configs/poolwatcher.cfg:/work/btcpool/build/run_poolwatcher/poolwatcher.cfg
+      - ./configs/simulator.cfg:/work/btcpool/build/run_simulator/simulator.cfg
     container_name: btcpool_sserver
     depends_on:
       - kafka
@@ -37,7 +42,11 @@ services:
     # command: /work/btcpool/build/run_gbtmaker/gbtmaker -c /work/btcpool/build/run_gbtmaker/gbtmaker.cfg -l /work/btcpool/build/run_gbtmaker/log_gbtmaker
     # command: /work/btcpool/build/run_statshttpd/statshttpd -c /work/btcpool/build/run_statshttpd/statshttpd.cfg -l /work/btcpool/build/run_statshttpd/log_statshttpd
     # command: /work/btcpool/build/run_sharelogger/sharelogger -c /work/btcpool/build/run_sharelogger/sharelogger.cfg -l /work/btcpool/build/run_sharelogger/log_sharelogger
+    # command: /work/btcpool/build/run_slparser/sharelogger -c /work/btcpool/build/run_slparser/slparser.cfg -l /work/btcpool/build/run_slparser/log_slparser
+    # command: /work/btcpool/build/run_poolwatcher/poolwatcher -c /work/btcpool/build/run_poolwatcher/poolwatcher.cfg -l /work/btcpool/build/run_poolwatcher/log_poolwatcher
     # command: /work/btcpool/build/run_gwmaker/gwmaker -c /work/btcpool/build/run_gwmaker/gwmaker.cfg -l /work/btcpool/build/run_gwmaker/log_gwmaker
+    # command: /work/btcpool/build/run_nmcauxmaker/nmcauxmaker -c /work/btcpool/build/run_nmcauxmaker/nmcauxmaker.cfg -l /work/btcpool/build/run_nmcauxmaker/log_nmcauxmaker
+    # command: /work/btcpool/build/run_simulator/simulator -c /work/btcpool/build/run_simulator/simulator.cfg -l /work/btcpool/build/run_simulator/log_simulator
     command: tail -f /dev/null
   user_list:
     image: btcpool_user_list
