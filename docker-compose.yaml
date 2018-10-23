@@ -17,7 +17,13 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-  btcpool:
+  kafka-manager:  
+    image: sheepkiller/kafka-manager
+    environment:
+        ZK_HOSTS: zookeeper:2181
+    ports:
+      - "9000:9000"          
+  btcpool-sserver:
     image: daocloud.io/dubuqingfeng/btcpool
     volumes:
       - ./config/sserver.cfg:/work/btcpool/build/run_sserver/sserver.cfg
