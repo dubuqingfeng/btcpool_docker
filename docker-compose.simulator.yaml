@@ -1,0 +1,12 @@
+version: '3.3'
+# networks:
+#   btcpool:
+
+services:
+  btcpool-simulator:
+    image: daocloud.io/dubuqingfeng/btcpool
+    volumes:
+      - ./configs/simulator.cfg:/work/btcpool/build/run_simulator/simulator.cfg
+    container_name: btcpool_simulator
+    # command: /work/btcpool/build/run_simulator/simulator -c /work/btcpool/build/run_simulator/simulator.cfg -l /work/btcpool/build/run_simulator/log_simulator
+    command: tail -f /dev/null

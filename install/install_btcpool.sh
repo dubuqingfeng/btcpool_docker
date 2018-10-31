@@ -15,5 +15,5 @@ mkdir -p /work && cd /work
 git clone https://github.com/btccom/btcpool.git
 cd /work/btcpool
 mkdir build && cd build
-cmake -DCHAIN_TYPE=BTC -DCHAIN_SRC_ROOT=/work/bitcoin-0.16.0 -DCMAKE_BUILD_TYPE=Debug ..
+cmake -DCHAIN_TYPE=BTC -DCHAIN_SRC_ROOT=/work/bitcoin-0.16.0 -DPOOL__WORK_WITH_STRATUM_SWITCHER=OFF -DCMAKE_BUILD_TYPE=Debug ..
 make -j1
