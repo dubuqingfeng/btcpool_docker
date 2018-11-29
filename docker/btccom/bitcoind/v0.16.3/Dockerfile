@@ -35,16 +35,3 @@ RUN mkdir -p /root/scripts
 
 # logrotate
 ADD logrotate-bitcoind /etc/logrotate.d/bitcoind
-
-#
-# services
-#
-# service for mainnet
-RUN mkdir    /etc/service/bitcoind
-ADD run      /etc/service/bitcoind/run
-RUN chmod +x /etc/service/bitcoind/run
-
-# service for testnet3
-#RUN mkdir        /etc/service/bitcoind_testnet3
-#ADD run_testnet3 /etc/service/bitcoind_testnet3/run
-#RUN chmod +x     /etc/service/bitcoind_testnet3/run
