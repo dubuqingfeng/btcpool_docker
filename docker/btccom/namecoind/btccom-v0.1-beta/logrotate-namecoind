@@ -1,6 +1,0 @@
-/root/.namecoin/debug.log {
-    daily
-    rotate 7
-    missingok
-    copytruncate
-}
