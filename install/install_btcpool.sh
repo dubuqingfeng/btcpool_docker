@@ -8,8 +8,6 @@
 # @author Kevin Pan
 # @since 2016-08
 #
-
-CPUS=`lscpu | grep '^CPU(s):' | awk '{print $2}'`
 # btcpool
 mkdir -p /work && cd /work
 git clone https://github.com/btccom/btcpool.git

@@ -3,20 +3,34 @@ version: '3.3'
 #   btcpool:
 
 services:
+  bitcoind:
+    image: dubuqingfeng/btcpool-bitcoin:bitcoind-0.16.3
+    volumes:
+      - ~/Downloads/testnet3:/root/.bitcoin
+    ports:
+      - "8333:8333"
+      - "8332:8332"
+      - "8331:8331"
+      - "18333:18333"
+      - "18332:18332"
+      - "18331:18331"
+    container_name: bitcoind-0.16.3
+    command: bitcoind -testnet -conf="/root/.bitcoin/bitcoin.conf" -datadir="/root/.bitcoin" -zmqpubrawblock=tcp://0.0.0.0:18331 -zmqpubrawtx=tcp://0.0.0.0:18331 -zmqpubhashtx=tcp://0.0.0.0:18331 -zmqpubhashblock=tcp://0.0.0.0:18331
   zookeeper:
-    image: wurstmeister/zookeeper
+    image: bitnami/zookeeper:latest
     container_name: btcpool_zookeeper
     ports:
       - "2181:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
-    image: wurstmeister/kafka
+    image: bitnami/kafka:latest
     container_name: btcpool_kafka
     ports:
       - "9092:9092"
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_HOST_IP}
-      KAFKA_CREATE_TOPICS: "test:1:1,RawGbt:1:1,StratumJob:1:1,SolvedShare:1:1,ShareLog:1:1,CommonEvents:1:1,NMCAuxBlock:1:1,NMCSolvedShare:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
   btcpool-sserver:
     image: daocloud.io/dubuqingfeng/btcpool
     volumes:

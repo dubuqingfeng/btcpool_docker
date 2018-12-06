@@ -1,16 +1,17 @@
-FROM ubuntu
-RUN  apt-get update \
-  && apt-get install -y wget git build-essential autotools-dev libtool autoconf automake pkg-config cmake \
-  && apt-get install -y openssl libssl-dev libcurl4-openssl-dev libconfig++-dev libboost-all-dev libgoogle-glog-dev libevent-dev libhiredis-dev libzmq3-dev libmysqlclient-dev libgmp-dev libzookeeper-mt-dev \
-  && rm -rf /var/lib/apt/lists/*
+FROM dubuqingfeng/btcpool-prebuild:ubuntu-librdkafka-0.11.4
 
-RUN mkdir /work
-RUN cd /work
-COPY install/install_dependency.sh install_dependency.sh
-RUN bash ./install_dependency.sh
+RUN mkdir -p /work && \
+    cd /work && \
+    wget -O bitcoin-0.16.3.tar.gz https://github.com/bitcoin/bitcoin/archive/v0.16.3.tar.gz && \
+    tar zxf bitcoin-0.16.3.tar.gz
 
-COPY install/install_btcpool.sh install_btcpool.sh
-RUN bash ./install_btcpool.sh
+RUN mkdir -p /work && \
+    cd /work && \
+    git clone https://github.com/btccom/btcpool.git && \
+    cd /work/btcpool && \
+    mkdir build && cd build && \
+    cmake -DCHAIN_TYPE=BTC -DCHAIN_SRC_ROOT=/work/bitcoin-0.16.3 -DPOOL__WORK_WITH_STRATUM_SWITCHER=OFF -DCMAKE_BUILD_TYPE=Debug .. && \
+    make -j1
 
 COPY install/init_folders.sh init_folders.sh
 RUN bash ./init_folders.sh
